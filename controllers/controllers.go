@@ -40,3 +40,13 @@ func CriaUmaNovaPersonalidade(ctx *fiber.Ctx) error {
 
 	return ctx.JSON(novaPersonalidade)
 }
+
+func DeletaUmaPersonalidade(ctx *fiber.Ctx) error {
+	id := ctx.Params("id")
+
+	var personalidade models.Personalidade
+
+	database.DB.Delete(&personalidade, id)
+
+	return ctx.JSON(personalidade)
+}
