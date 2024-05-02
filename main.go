@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/josepedro1903/go-rest-api/database"
 	"github.com/josepedro1903/go-rest-api/models"
 	"github.com/josepedro1903/go-rest-api/routes"
 )
@@ -13,6 +14,8 @@ func main() {
 		{ID: 1, Nome: "Nome 1", Historia: "Historia 1"},
 		{ID: 2, Nome: "Nome 2", Historia: "Historia 2"},
 	}
+
+	database.ConectaComBancoDeDados()
 
 	fmt.Println("Starting server...")
 
