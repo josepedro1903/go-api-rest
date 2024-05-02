@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"encoding/json"
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
@@ -19,9 +18,7 @@ func TodasPersonalidades(ctx *fiber.Ctx) error {
 	var p []models.Personalidade
 	database.DB.Find(&p)
 
-	json.NewEncoder(ctx).Encode(p)
-
-	return nil
+	return ctx.JSON(p)
 }
 
 func RetornaPersonalidade(ctx *fiber.Ctx) error {
@@ -31,7 +28,15 @@ func RetornaPersonalidade(ctx *fiber.Ctx) error {
 
 	database.DB.First(&personalidade, id)
 
-	json.NewEncoder(ctx).Encode(personalidade)
+	return ctx.JSON(personalidade)
+}
 
-	return nil
+func CriaUmaNovaPersonalidade(ctx *fiber.Ctx) error {
+	var novaPersonalidade models.Personalidade
+
+	ctx.BodyParser(&novaPersonalidade)
+
+	database.DB.Create(&novaPersonalidade)
+
+	return ctx.JSON(novaPersonalidade)
 }
