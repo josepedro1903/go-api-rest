@@ -15,6 +15,8 @@ func HandleRequest(app fiber.Router) {
 
 	r.Post("/personalidades", controllers.CriaUmaNovaPersonalidade)
 
-	r.Delete("/personalidade/:id", controllers.DeletaUmaPersonalidade)
+	r.Delete("/personalidades/:id", controllers.DeletaUmaPersonalidade)
+
+	r.Put("/personalidades/:id", controllers.EditaUmaPersonalidade)
 
 }

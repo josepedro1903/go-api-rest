@@ -50,3 +50,17 @@ func DeletaUmaPersonalidade(ctx *fiber.Ctx) error {
 
 	return ctx.JSON(personalidade)
 }
+
+func EditaUmaPersonalidade(ctx *fiber.Ctx) error {
+	id := ctx.Params("id")
+
+	var personalidade models.Personalidade
+
+	database.DB.First(&personalidade, id)
+
+	ctx.BodyParser(&personalidade)
+
+	database.DB.Save(&personalidade)
+
+	return ctx.JSON(personalidade)
+}
