@@ -3,9 +3,9 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
-	"strconv"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/josepedro1903/go-rest-api/database"
 	"github.com/josepedro1903/go-rest-api/models"
 )
 
@@ -16,7 +16,10 @@ func Home(ctx *fiber.Ctx) error {
 }
 
 func TodasPersonalidades(ctx *fiber.Ctx) error {
-	json.NewEncoder(ctx).Encode(models.Personalidades)
+	var p []models.Personalidade
+	database.DB.Find(&p)
+
+	json.NewEncoder(ctx).Encode(p)
 
 	return nil
 }
@@ -24,16 +27,11 @@ func TodasPersonalidades(ctx *fiber.Ctx) error {
 func RetornaPersonalidade(ctx *fiber.Ctx) error {
 	id := ctx.Params("id")
 
-	IdInt, err := strconv.Atoi(id)
-	if err != nil {
-		return ctx.Status(fiber.StatusBadRequest).SendString("ID inválido")
-	}
+	var personalidade models.Personalidade
 
-	for _, personalidade := range models.Personalidades {
-		if personalidade.ID == IdInt {
-			return ctx.JSON(personalidade)
-		}
-	}
+	database.DB.First(&personalidade, id)
 
-	return ctx.Status(fiber.StatusNotFound).SendString("Personalidade não encontrada")
+	json.NewEncoder(ctx).Encode(personalidade)
+
+	return nil
 }

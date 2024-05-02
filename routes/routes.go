@@ -6,7 +6,9 @@ import (
 )
 
 func HandleRequest(app fiber.Router) {
+
 	app.Get("/", controllers.Home)
 	app.Get("/personalidades", controllers.TodasPersonalidades)
 	app.Get("/personalidades/:id", controllers.RetornaPersonalidade)
+
 }
