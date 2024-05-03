@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/josepedro1903/go-rest-api/database"
 	"github.com/josepedro1903/go-rest-api/models"
 	"github.com/josepedro1903/go-rest-api/routes"
@@ -20,6 +21,12 @@ func main() {
 	fmt.Println("Starting server...")
 
 	app := fiber.New()
+
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
+		AllowHeaders: "*",
+	}))
+
 	routes.HandleRequest(app)
 	app.Listen(":8000")
 }
